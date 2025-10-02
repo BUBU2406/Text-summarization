@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TEXT_SUMMARIZATION</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400&display=swap" rel="stylesheet">
+    <style type="text/css">
+        .text-div{
+            margin: 40px;
+        }
+
+        @media only screen and (max-width: 768px)
+        {
+            .text-div{
+                margin: 20px 0 ;
+            }
+           }
+
+
+    </style>
+
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl" class="container" >
+    <br> 
+    <br>
+    <br> 
+    <form>
+        <div class="form-group">
+          <label for="comment">Enter Text:</label>
+          <textarea class="form-control" ng-model="comment" rows="5"  id="comment"></textarea>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-default" ng-click="myFunction()">Get Result</button>
+    <br>
+    <br>
+    <label for="comment">Result : </label> 
+    <p> {{'{{result}}'}} </p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    </div>
+    <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope,$http) {
+        var label = null;
+        $scope.myFunction = function() {
+            var data1 = {'comment': $scope.comment}
+            $http({
+                method : "POST",
+                url : "postmt",
+                data :  $scope.comment,
+                headers: {'Content-Type' : 'application/json; charset=UTF-8'}
+            }).then(function mySuccess(response) {
+                $scope.result = response.data.result;
+            }, function myError(response) {
+                $scope.result = response.statusText;
+            });
+        }
+
+    });
+    </script> 
+</div>
+</body>
+</html>
